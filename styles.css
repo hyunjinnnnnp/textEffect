@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: crimson;
+}
+.container {
+  width: 200px;
+  height: 200px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 50px;
+}
+@keyframes rotate {
+  50% {
+    transform: rotateY(-90deg);
+  }
+  100% {
+    transform: rotateY(-180deg);
+  }
+}
+.box:nth-child(1),
+.box:nth-child(4) {
+  animation: rotate 2s infinite;
+  /* animation-delay: 0.5s; */
+  animation-timing-function: ease-in-out;
+}
+.box:nth-child(2),
+.box:nth-child(3) {
+  animation: rotate 2s infinite;
+  animation-timing-function: ease-in-out;
+}
+.box {
+  transform-style: preserve-3d;
+  perspective: 10000px;
+  position: relative;
+  width: 100px;
+  height: 100%;
+}
+
+.text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 45px;
+  font-weight: 500;
+  backface-visibility: hidden;
+}
+.box:nth-child(1) .front,
+.box:nth-child(1) .back,
+.box:nth-child(2) .right,
+.box:nth-child(2) .left,
+.box:nth-child(3) .right,
+.box:nth-child(3) .left,
+.box:nth-child(4) .front,
+.box:nth-child(4) .back {
+  /* background-color: crimson; */
+  color: cornflowerblue;
+}
+.box:nth-child(1) .right,
+.box:nth-child(1) .left,
+.box:nth-child(2) .front,
+.box:nth-child(2) .back,
+.box:nth-child(3) .front,
+.box:nth-child(3) .back,
+.box:nth-child(4) .right,
+.box:nth-child(4) .left {
+  /* background-color: cornflowerblue; */
+  color: transparent;
+  -webkit-text-stroke: 1px cornflowerblue;
+}
+
+.front {
+  transform: translateZ(50px);
+  /* background-color: rgba(255, 198, 198, 0.712); */
+}
+.left {
+  /* 회전 중심축은 center이기떄문에 자기 자신의 width/2만큼 오른편에 치우쳐있음 
+    옆 벽들은 회전된 상태이기때문에 Z축이 옆을 향하고있음.
+    width/2만큼 Z축 이동 시켜준다.*/
+  transform-origin: left;
+  transform: rotateY(-90deg) translateX(-50px);
+}
+.right {
+  transform-origin: right;
+  transform: rotateY(90deg) translateX(50px);
+}
+.back {
+  transform: rotateY(180deg) translateZ(50px);
+}
